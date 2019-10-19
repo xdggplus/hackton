@@ -3,7 +3,6 @@
         <div v-if="title" :style="{width:width+'px'}" class="title">{{title}}</div>
         <div :id="containerId" :style="{width:width+'px',height:height+'px'}"></div>
     </div>
-    
 </template>
 
 <script>
@@ -62,6 +61,7 @@ var echarts = require('echarts');
                         left: '3%',
                         right: '4%',
                         bottom: '3%',
+                        top:'3%',
                         containLabel: true
                     },
                     xAxis: {

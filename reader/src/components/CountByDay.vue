@@ -170,7 +170,7 @@ export default {
                     left: '3%',
                     right: '4%',
                     bottom: '3%',
-                    top:'3%',
+                    top:'5%',
                     containLabel: true
                 },
                 xAxis : [
@@ -206,6 +206,7 @@ export default {
         font-weight: 600;
         line-height: 30px;
         text-align: left;
+        margin: 5px 10px;
     }
 
     .type-all{

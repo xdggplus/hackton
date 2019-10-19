@@ -4,25 +4,31 @@
       :typeList="typeList"
       :timeList="timeList"
       :typeTimeData="typeTimeData"
-      :allTimeLable="allTimeLable"
-      :width="600"></count-by-day>
-    
-    <single-item v-for="(item,idx) in itemList" :key="'item_'+idx"
+      allTimeLable="今日浏览器使用情况分析"
+      :width="600"
+      :height="200"></count-by-day>
+    <div class="split-line"></div>
+    <div>
+      <div class="list-title">今日访问网站详情</div>
+      <single-item v-for="(item,idx) in itemList" :key="'item_'+idx"
       :name="item.name"
       :imageData="item.imageData"
       :useMin="item.useMin"
       :maxMin="maxMin"
-      :width="600"></single-item>
+      :width="600"
+      @click.native="showUrlHistory(item.name)"></single-item>
+    </div>
 
-      <word-cloud
-        :wordCloudData="wordCloudData"></word-cloud>
-
+    <div v-if="showUrlHistoryTag" style="margin-top:15px;">
       <single-area-chart
-        title="baidu.com访问历史记录"
+        :title="showUrlName + ' 访问次数分布'"
         :x_data="timeList"
         :y_data="typeTimeData[0]"
         :width="600"
-        :height="400"></single-area-chart>
+        :height="300"></single-area-chart>
+    </div>
+    <!-- <word-cloud
+        :wordCloudData="wordCloudData"></word-cloud> -->
   </div>
 </template>
 
@@ -36,7 +42,6 @@ export default {
   data () {
     return {
       msg: 'This is popup page !',
-      allTimeLable:'今日浏览器使用情况分析',
       timeList:['12日','13日','14日','15日','16日','17日','18日','19日'],
       typeList:['搜索引擎','社交网站','新闻娱乐','技术论坛','其他'],
       typeTimeData:[
@@ -70,6 +75,8 @@ export default {
       ],
       maxMin:132,
 
+      showUrlHistoryTag:false, //是否显示域名历史记录
+      showUrlName:"",
       wordCloudData:[
         {
           name:"12306",
@@ -103,6 +110,12 @@ export default {
     SingleItem,
     WordCloud,
     SingleAreaChart
+  },
+  methods:{
+    showUrlHistory(name){
+      this.showUrlHistoryTag = true;
+      this.showUrlName = name;
+    }
   }
 }
 </script>
@@ -110,7 +123,8 @@ export default {
 <style lang="scss">
 html, body {
   width: 600px;
-  height: 600px;
+  min-height: 600px;
+  max-height: 800px;
 }
 
 #app {
@@ -119,7 +133,7 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 15px;
 }
 
 h1, h2 {
@@ -138,5 +152,21 @@ li {
 
 a {
   color: #42b983;
+}
+
+.split-line{
+  display: block;
+  height: 2px;
+  background-color: #eee;
+  border-radius: 2px;
+  margin: 10px 5px;
+}
+
+.list-title{
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+  margin: 0 5px;
 }
 </style>
