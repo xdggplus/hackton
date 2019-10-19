@@ -12,6 +12,10 @@
     "clear": "rm -rf chrome-ext.crx extension.zip dist"
   },
   "dependencies": {
+    "echarts": "^4.4.0",
+    "echarts-wordcloud": "^1.1.3",
+    "lodash": "^4.17.15",
+    "view-design": "^4.0.1",
     "vue": "^2.5.11"
   },
   "browserslist": [
