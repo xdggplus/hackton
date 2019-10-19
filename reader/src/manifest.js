@@ -1,8 +1,8 @@
 module.exports = {
-  name: 'Vue Chrome Extension',
+  name: 'TimeTools',
   version: '1.0.0',
-  description: 'Vue.js Chrome Extension Template',
-  author: '',
+  description: 'find where you time goes',
+  author: '刷金小分队',
   manifest_version: 2,
   icons: {
     '16': 'icons/main.png',
@@ -22,7 +22,7 @@ module.exports = {
       '38': 'icons/main.png',
       '128': 'icons/main.png'
     },
-    default_title: "default title",
+    default_title: "Time Previews",
     default_popup: "pages/popup.html"
   },
   background: {

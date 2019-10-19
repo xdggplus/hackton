@@ -1,0 +1,96 @@
+{
+    "搜索": {
+        "rules": [],
+        "sites": [
+            "www.baidu.com",
+            "bing.com",
+            "google.com.hk",
+            "google.com",
+            "wwww.sogou.com",
+            "www.so.com"
+        ]
+    },
+    "视频": {
+        "rules": [
+            "\\.tv\\."
+        ],
+        "sites": [
+            "www.youku.com",
+            "www.iqiyi.com",
+            "v.qq.com",
+            "tv.sohu.com",
+            "video.sina.com.cn",
+            "tv.cctv.com"
+        ]
+    },
+    "音乐": {
+        "rules": [
+            ".*music.*"
+        ],
+        "sites": [
+            "music.163.com",
+            "douban.fm",
+            "y.qq.com",
+            "www.xiami.com",
+            "last.fm"
+        ]
+    },
+    "博客": {
+        "rules": [
+            ".*blog.*"
+        ],
+        "sites": [
+            "csdn.net",
+            "cnblogs.com",
+            "jianshu.com",
+            "iteye.com",
+            "segmentfault.com",
+            "juejin.im"
+        ]
+    },
+    "新闻": {
+        "rules": [
+            ".*news.*"
+        ],
+        "sites": [
+            "www.toutiao.com",
+            "news.163.com",
+            "tieba.baidu.com"
+        ]
+    },
+    "购物": {
+        "rules": [],
+        "sites": [
+            "taobao.com",
+            "tmall.com",
+            "jd.com"
+        ]
+    },
+    "社交": {
+        "rules": [],
+        "sites": [
+            "weibo.com",
+            "wx.qq.com"
+        ]
+    },
+    "学习": {
+        "sites": [
+
+            "zhihu.com",
+            "github.com",
+            "stackoverflow.com"
+        ],
+        "rules": [
+            ".*edu\\.cn$"
+        ]
+    },
+    "出行": {
+        "rules":[],
+        "sites":[
+            "12306.cn",
+            "ctrip.com",
+            "fliggy.com",
+            "qunar.com"
+        ]
+    }
+}

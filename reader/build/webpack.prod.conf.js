@@ -8,7 +8,7 @@ const { resolve } = require('./util')
 
 
 module.exports = merge(baseConf, {
-  devtool: '#source-map',
+  devtool: 'source-map',
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
