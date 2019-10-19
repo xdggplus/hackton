@@ -6,9 +6,12 @@
 </template>
 
 <script>
+import catory from '../common/category'
+import jieba from "../common/jieba.js"
 export default {
   name: 'app',
   data () {
+    jieba.getKeyWords("");
     return {
       msg: 'This is options page !'
     }

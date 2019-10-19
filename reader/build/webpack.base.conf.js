@@ -93,6 +93,10 @@ module.exports = {
           limit: 10000,
           name: assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       }
     ]
   },
