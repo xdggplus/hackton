@@ -12,6 +12,7 @@ module.exports = {
   permissions: [
     '*://*/',
     'storage',
+    'tabs',
     'contextMenus',
     'clipboardWrite',
     'clipboardRead'
