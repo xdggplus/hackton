@@ -23,7 +23,9 @@
       <FormItem v-if="showWordCloud">
         <word-cloud 
           :wordCloudData="wordCloudData"
-          :update="update"></word-cloud>
+          :update="update"
+          :width="500"
+          :height="400"></word-cloud>
       </FormItem>
       
     </Form>
@@ -38,7 +40,7 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'This is options page !aaaaaaa',
+      msg: '配置管理',
       recommend:false,
       collect:false,
       showWordCloud:false,
@@ -115,7 +117,7 @@ export default {
     }
   },
   mounted(){
-    hosts.getHostInformation('')
+    // hosts.getHostInformation('')
   }
 }
 </script>

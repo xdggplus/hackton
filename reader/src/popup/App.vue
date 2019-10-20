@@ -48,15 +48,18 @@ export default {
   data () {
     return {
       msg: 'This is popup page !',
-      timeList:['12日','13日','14日','15日','16日','17日','18日','19日'],
-      typeList:['搜索引擎','社交网站','新闻娱乐','技术论坛','其他'],
-      typeTimeData:[
-        [14,1,5,13,32,12,33,22],
-        [12,43,23,43,2,33,18,20],
-        [12,3,2,4,8,6,7,2],
-        [21,22,19,15,23,11,16,25],
-        [10,9,4,6,7,4,3,7]
-      ],
+      // timeList:['12日','13日','14日','15日','16日','17日','18日','19日'],
+      // typeList:['搜索引擎','社交网站','新闻娱乐','技术论坛','其他'],
+      // typeTimeData:[
+      //   [14,1,5,13,32,12,33,22],
+      //   [12,43,23,43,2,33,18,20],
+      //   [12,3,2,4,8,6,7,2],
+      //   [21,22,19,15,23,11,16,25],
+      //   [10,9,4,6,7,4,3,7]
+      // ],
+      timeList:[],
+      typeList:[],
+      typeTimeData:[],
       itemList:[
         {
           imageData:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAeCAYAAAAcni9KAAAAaElEQVQ4jcXTMQ4AEBAEQH/yJ69Vq31CTSWRC26dDcVVu1NtzvkQq+VcyuUDPMUpFwJEce9yoIbHHg+usOxwocSznA87XmV2aH4rbbM3ENmVB5FdeXC3qcT3UEMS30EUjdgOTxH0Vrtri9j3uTwNEWIAAAAASUVORK5CYII=",

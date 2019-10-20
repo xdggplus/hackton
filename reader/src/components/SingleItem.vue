@@ -17,6 +17,7 @@
 </template>
 
 <script>
+// import hosts from "../common/hosts.js";
     export default {
         name: 'SingleItem',
         props:{
@@ -59,7 +60,7 @@
             minTransToHumanRead(num){
                 num = parseInt(num);
                 if(num<1){
-                    return "1分钟";
+                    return "0分钟";
                 }
                 if(num<60){
                     return num + "分钟";
@@ -74,6 +75,10 @@
                     return h+"小时"+m+"分钟";
                 }
             }
+        },
+        mounted(){
+            // let co = hosts.getHostInformation("sf");
+            // console.log(co);
         }
     }
 </script>
