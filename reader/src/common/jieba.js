@@ -16,11 +16,10 @@ export default {
      * ]
      */
     getKeyWords: function (list) {
-        let sentence = list.join(',')
-        let res = segmentit.doSegment(sentence)
-        x = _.map(res, res => res.w)
+        let sentence = list.join(',');
+        let res = segmentit.doSegment(sentence);
+        let x = _.map(res, res => res.w)
         x = _.countBy(x, value => value)
-        x = _.sortBy(x)
         x = _.toPairs(x)
         x = _.sortBy(x, x => x[1])
         x = _.reverse(x)

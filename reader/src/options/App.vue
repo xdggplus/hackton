@@ -21,7 +21,9 @@
         </i-switch>
       </FormItem>
       <FormItem v-if="showWordCloud">
-        <word-cloud :wordCloudData="wordCloudData"></word-cloud>
+        <word-cloud 
+          :wordCloudData="wordCloudData"
+          :update="update"></word-cloud>
       </FormItem>
       
     </Form>
@@ -66,11 +68,47 @@ export default {
           name:"GitHub",
           value:4353
         }
-      ]
+      ],
+      update:0
     }
   },
   components:{
     WordCloud
+  },
+  watch:{
+    showWordCloud(newVal,oldVal){
+      if(newVal){
+        console.log(newVal);
+        const self = this
+        chrome.runtime.sendMessage({
+          method:"getTodayData"
+        }, function(response){
+          let keyList = [];
+          if(!response){
+            return null;
+          }
+          for(let k in response){
+            keyList = keyList.concat(response[k].titles);
+          }
+          let resultList = jieba.getKeyWords(keyList);
+          let wordCloudData = [];
+          for(let k in resultList){
+            let kitem = resultList[k];
+            for(let kname in kitem){
+              let kvalue = kitem[kname];
+              wordCloudData.push({
+                name:kname,
+                value:kvalue
+              })
+            }
+            
+          }
+          self.wordCloudData = wordCloudData;
+          self.update++;
+        })
+      
+      }
+    }
   },
   methods:{
     showReport(){

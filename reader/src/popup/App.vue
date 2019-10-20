@@ -17,19 +17,20 @@
       :useMin="item.useMin"
       :maxMin="maxMin"
       :width="600"
-      @click.native="showUrlHistory(item.name)"></single-item>
+      @click.native="showUrlHistory(item)"></single-item>
     </div>
 
     <div v-if="showUrlHistoryTag" style="margin-top:15px;">
       <single-area-chart
         :title="showUrlName + ' 访问次数分布'"
         :x_data="timeList"
-        :y_data="typeTimeData[0]"
+        :y_data="showUrlTimeData"
         :width="600"
-        :height="300"></single-area-chart>
+        :height="300"
+        :update="singleUpdate"></single-area-chart>
       
-      <word-cloud
-          :wordCloudData="wordCloudData"></word-cloud>
+      <!-- <word-cloud
+          :wordCloudData="wordCloudData"></word-cloud> -->
     </div>
   </div>
 </template>
@@ -40,6 +41,7 @@ import SingleItem from "../components/SingleItem.vue";
 import WordCloud from "../components/WordCloud.vue";
 import SingleAreaChart from "../components/SingleAreaChart.vue";
 import catory from '../common/category';
+import jieba from '../common/jieba';
 export default {
   name: 'app',
   data () {
@@ -80,6 +82,8 @@ export default {
 
       showUrlHistoryTag:false, //是否显示域名历史记录
       showUrlName:"",
+      showUrlTimeData:[], //显示URL的历史记录
+      singleUpdate:0,
       wordCloudData:[
         {
           name:"12306",
@@ -116,11 +120,14 @@ export default {
     SingleAreaChart
   },
   methods:{
-    showUrlHistory(name){
+    showUrlHistory(item){
       this.showUrlHistoryTag = true;
-      this.showUrlName = name;
+      this.showUrlName = item.name;
+      this.showUrlTimeData = item.hostConsume;
+      this.singleUpdate++;
     },
     getTodayData(){
+      console.log("getTodayData");
       const self = this
       chrome.runtime.sendMessage({
         method:"getTodayData"
@@ -128,6 +135,10 @@ export default {
         if(!response){
           return;
         }
+        //处理长度不一致的辅助对象
+        let nowDate = new Date();
+        let house = nowDate.getHours();
+
         let typeList = [];
         let typeTimeData = [];
         let itemList = [];
@@ -135,38 +146,46 @@ export default {
         let timeList=[];
         for(let h in response){
           let theHostObj = response[h];
-          let hostConsume = theHostObj.Consume.map(function(v){
-            if(!v){
-              return 0;
-            }
-            return v;
+
+          let useMin = 0;
+          let hostConsume = theHostObj.consumes.map(function(v){
+            let num = Math.max(parseInt((v||0)/60),0);
+            useMin += num;
+            return num;
           });
+
+          for(let tempLen = hostConsume.length;tempLen<house+1;tempLen++){
+            hostConsume.unshift(0);
+          }
+        
           if(timeList.length==0){
-            for(let i in hostConsume){
+            for(let i=0;i<=house;i++){
               timeList.push(i+"点")
             }
           }
 
-          let useMin = 0;
-          let idx = typeList.indexOf(h);
+          let type = self.getHostType(h);
+          let idx = typeList.indexOf(type);
           if(idx<0){
-            typeList.push(h);
+            typeList.push(type);
             typeTimeData.push(hostConsume);
           }else{
-            hostConsume.forEach(function(hv,index){
-              useMin += hv;
-              typeTimeData[idx][index] = typeTimeData[idx][index] + hv;
-            });
+            for(let addIdx=0;addIdx<hostConsume.length;addIdx++){
+              typeTimeData[idx][addIdx] = typeTimeData[idx][addIdx] + hostConsume[addIdx]; 
+            }
           }
 
           itemList.push({
             name:h,
-            useMin:usemin,
-            imageData:theHostObj.icon
+            useMin:useMin,
+            imageData:theHostObj.icon,
+            hostConsume:hostConsume
           });
 
-          maxMin = Math.max(usemin,maxMin);
+          maxMin = Math.max(useMin,maxMin);
         }
+
+        itemList.sort(function(a,b){return b.useMin-a.useMin});
 
         self.maxMin = maxMin;
         self.itemList = itemList;
@@ -179,6 +198,11 @@ export default {
     getHostType(host){
       return catory.getCatoryByHostName(host);
     }
+  },
+  mounted(){
+    this.$nextTick(function(){
+      this.getTodayData();
+    })
   }
 }
 </script>
