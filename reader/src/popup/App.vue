@@ -16,6 +16,7 @@
       :imageData="item.imageData"
       :useMin="item.useMin"
       :maxMin="maxMin"
+      :times="item.times"
       :width="600"
       @click.native="showUrlHistory(item)"></single-item>
     </div>
@@ -179,6 +180,7 @@ export default {
             name:h,
             useMin:useMin,
             imageData:theHostObj.icon,
+            times:theHostObj.times.reduce((a, b) => (a||0) + (b||0), 0),
             hostConsume:hostConsume
           });
 

@@ -3,7 +3,7 @@
         <div :style="{'background-image':'url('+imageData+')'}" class="item-img"></div>
         <div style="border-bottom: 0.5px solid #8c8c8c; display: inline-block;">
             <div class="item-jindu" :style="{width:(width-80)+'px'}">
-                <div class="item-jindu-name">{{name}}</div>
+                <div class="item-jindu-name">{{name}} <span v-if="times" style="font-size:14px">（{{times}}次）</span> </div>
                 <div class="item-jindu-perent">
                     <div class="item-jindu-percent-line"  :style="{'width':jindu_width+'px'}" style="width:50px;"></div>
                     <div class="item-jindu-perent-time">{{minTransToHumanRead(useMin)}}</div>
@@ -25,6 +25,10 @@
                 default:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAeCAYAAAAcni9KAAAAaElEQVQ4jcXTMQ4AEBAEQH/yJ69Vq31CTSWRC26dDcVVu1NtzvkQq+VcyuUDPMUpFwJEce9yoIbHHg+usOxwocSznA87XmV2aH4rbbM3ENmVB5FdeXC3qcT3UEMS30EUjdgOTxH0Vrtri9j3uTwNEWIAAAAASUVORK5CYII="
             },
             name:String,
+            times:{
+                type:Number,
+                default:0
+            },
             useMin:{
                 type:Number,
                 required:true
