@@ -7,14 +7,17 @@
 
 <script>
 import catory from '../common/category'
-import jieba from "../common/jieba.js"
+import hosts from '../common/hosts.js'
 export default {
   name: 'app',
   data () {
-    jieba.getKeyWords("");
+
     return {
       msg: 'This is options page !'
     }
+  },
+  mounted(){
+    hosts.getHostInformation('')
   }
 }
 </script>
