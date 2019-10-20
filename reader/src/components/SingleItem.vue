@@ -3,7 +3,9 @@
         <div :style="{'background-image':'url('+imageData+')'}" class="item-img"></div>
         <div style="border-bottom: 0.5px solid #8c8c8c; display: inline-block;">
             <div class="item-jindu" :style="{width:(width-80)+'px'}">
-                <div class="item-jindu-name">{{name}} <span v-if="times" style="font-size:14px">（{{times}}次）</span> </div>
+                <div class="item-jindu-name">{{transName}} 
+                    <Rate allow-half v-model="valueHalf" />
+                    <span v-if="times" style="font-size:14px">（{{times}}次）</span> </div>
                 <div class="item-jindu-perent">
                     <div class="item-jindu-percent-line"  :style="{'width':jindu_width+'px'}" style="width:50px;"></div>
                     <div class="item-jindu-perent-time">{{minTransToHumanRead(useMin)}}</div>
@@ -17,6 +19,7 @@
 </template>
 
 <script>
+import hosts from "../common/hosts.js";
     export default {
         name: 'SingleItem',
         props:{
@@ -44,6 +47,8 @@
         },
         data() {
             return {
+                transName:"",
+                valueHalf:0
             }
         },
         computed:{
@@ -59,7 +64,7 @@
             minTransToHumanRead(num){
                 num = parseInt(num);
                 if(num<1){
-                    return "1分钟";
+                    return "0分钟";
                 }
                 if(num<60){
                     return num + "分钟";
@@ -74,6 +79,17 @@
                     return h+"小时"+m+"分钟";
                 }
             }
+        },
+        mounted(){
+            hosts.getHostInformation(this.name).then(data=> {
+                if(data && data.name){
+                    console.log(data);
+                    this.transName = data.name;
+                    this.valueHalf = data.rank
+                }else{
+                    this.transName = this.name;
+                }
+            })
         }
     }
 </script>

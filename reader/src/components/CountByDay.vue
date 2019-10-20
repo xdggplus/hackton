@@ -104,6 +104,8 @@ export default {
                 return;
             }
 
+            console.log("typeTimeData="+this.typeTimeData.length);
+
             let that = this;
             
             let allTypeCountList = [];
@@ -142,6 +144,7 @@ export default {
                 });
 
             }
+            console.log(allTypeCountList);
             this.allTypeCountList = allTypeCountList;
 
             let newOption = {

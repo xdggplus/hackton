@@ -52,14 +52,14 @@ require('echarts-wordcloud');
             changeOption(){
                 let option = {
                     series: [{
-                        name: '舆情信息',
+                        name: '关键字分析',
                         type: 'wordCloud',
                         size: ['90%', '90%'],
                         textRotation : [-90, 90],
                         shape: 'circle',
                         autoSize: {
                             enable: true,
-                            minSize: 14
+                            minSize: 16
                         },
                         textStyle: {
                             normal: {
