@@ -3,7 +3,7 @@
         <div :style="{'background-image':'url('+imageData+')'}" class="item-img"></div>
         <div style="border-bottom: 0.5px solid #8c8c8c; display: inline-block;">
             <div class="item-jindu" :style="{width:(width-80)+'px'}">
-                <div class="item-jindu-name">{{name}} <span v-if="times" style="font-size:14px">（{{times}}次）</span> </div>
+                <div class="item-jindu-name">{{transName}} <span v-if="times" style="font-size:14px">（{{times}}次）</span> </div>
                 <div class="item-jindu-perent">
                     <div class="item-jindu-percent-line"  :style="{'width':jindu_width+'px'}" style="width:50px;"></div>
                     <div class="item-jindu-perent-time">{{minTransToHumanRead(useMin)}}</div>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-// import hosts from "../common/hosts.js";
+import hosts from "../common/hosts.js";
     export default {
         name: 'SingleItem',
         props:{
@@ -45,6 +45,7 @@
         },
         data() {
             return {
+                transName:""
             }
         },
         computed:{
@@ -77,8 +78,13 @@
             }
         },
         mounted(){
-            // let co = hosts.getHostInformation("sf");
-            // console.log(co);
+            hosts.getHostInformation(this.name).then(data=> {
+                if(data && data.name){
+                    this.transName = data.name;
+                }else{
+                    this.transName = this.name;
+                }
+            })
         }
     }
 </script>
