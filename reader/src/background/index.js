@@ -1,12 +1,22 @@
 // import {setHostnameData, getTodayHostnameList} from './storage'
 import {setConsume, setLoad} from './data'
+import {getTodayData, getHostTodayData} from './interface'
 import {getHostname} from './utils'
 
 console.log('This is BACKGROUND page!')
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) { 
     if(changeInfo.status === 'complete') {
-        setLoad(getHostname(tab.url), tab.title, '')
+        setLoad(getHostname(tab.url), tab.title, tab.favIconUrl)
     }
+})
+
+chrome.tabs.onActivated.addListener(function (info){
+    chrome.tabs.get(info.tabId, function(tab) {
+        console.log(tab)
+        if(tab && tab.url) {
+            setLoad(getHostname(tab.url))
+        }
+    })
 })
 
 setInterval(function(){
@@ -19,12 +29,7 @@ setInterval(function(){
  }, 5000);
 
 
-    //  chrome.tabs.onActivated.addListener(function (info){
-    //      chrome.tabs.get(info.tabId, function(tab) {
-    //          console.log(tab)
-    //          setHostnameData(getHostname(tab.url), tab.title, false)
-    //      })
-    //  })
+     
 
     //  chrome.tabs.onHighlighted.addListener(function (info){
     //  })
@@ -40,8 +45,10 @@ setInterval(function(){
 chrome.runtime.onMessage.addListener(callback);
 function callback(obj, sender, sendResponse) {
     console.log(obj)
-    if (obj == 'getContent') {
-            getContent(sendResponse);
+    if (obj.method == 'getHostTodayData') {
+            getHostTodayData(obj.params.hostname,sendResponse);
+    } else if(obj.method == 'getTodayData') {
+        getTodayData(sendResponse)
     }
     return true; // remove this line to make the call sync!
 }

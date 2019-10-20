@@ -10,12 +10,13 @@ export const setConsume = function(hostname) {
 
         let consumes = oldValue.consumes || {}
         consumes[yearMonthDay] = consumes[yearMonthDay] || []
-        consumes[yearMonthDay][hour] = (consumes[yearMonthDay][hour] || 0) + 5000
+        consumes[yearMonthDay][hour] = (consumes[yearMonthDay][hour] || 0) + 5
         
         const newValue = {
             consumes: consumes,
             times: oldValue.times,
             titles: oldValue.titles,
+            icon: oldValue.icon,
             createTime: oldValue.createTime || currentTime,
             updateTime: currentTime
         }
@@ -32,7 +33,7 @@ export const setLoad = function(hostname, title, icon) {
     chrome.storage.local.get(hostname, function(result) {
         const oldValue = result[hostname] || {}
         const titles = oldValue.titles || []
-        if(!titles.includes(title)) {
+        if(title && !titles.includes(title)) {
             titles.push(title)
         }
 
@@ -50,6 +51,7 @@ export const setLoad = function(hostname, title, icon) {
             consumes: oldValue.consumes,
             times: times,
             titles: titles,
+            icon: oldValue.icon || icon,
             createTime: oldValue.createTime || currentTime,
             updateTime: currentTime
         }
