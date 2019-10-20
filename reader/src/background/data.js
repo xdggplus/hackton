@@ -22,7 +22,6 @@ export const setConsume = function(hostname) {
         }
         let item = {}
         item[hostname] = newValue
-        console.log(newValue)
         chrome.storage.local.set(item, function() {
             console.log("set consume")
         })
@@ -57,7 +56,6 @@ export const setLoad = function(hostname, title, icon) {
         }
         let item = {}
         item[hostname] = newValue
-        console.log(newValue)
         chrome.storage.local.set(item, function() {
             console.log("set load")
         })
