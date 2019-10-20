@@ -6,7 +6,8 @@
       :typeTimeData="typeTimeData"
       allTimeLable="今日浏览器使用情况分析"
       :width="600"
-      :height="200"></count-by-day>
+      :height="200"
+      :update="update"></count-by-day>
     <div class="split-line"></div>
     <div>
       <div class="list-title">今日访问网站详情</div>
@@ -26,9 +27,10 @@
         :y_data="typeTimeData[0]"
         :width="600"
         :height="300"></single-area-chart>
+      
+      <word-cloud
+          :wordCloudData="wordCloudData"></word-cloud>
     </div>
-    <!-- <word-cloud
-        :wordCloudData="wordCloudData"></word-cloud> -->
   </div>
 </template>
 
@@ -37,6 +39,7 @@ import CountByDay from "../components/CountByDay.vue";
 import SingleItem from "../components/SingleItem.vue";
 import WordCloud from "../components/WordCloud.vue";
 import SingleAreaChart from "../components/SingleAreaChart.vue";
+import catory from '../common/category';
 export default {
   name: 'app',
   data () {
@@ -102,7 +105,8 @@ export default {
           name:"GitHub",
           value:4353
         }
-      ]
+      ],
+      update:0
     }
   },
   components:{
@@ -115,6 +119,65 @@ export default {
     showUrlHistory(name){
       this.showUrlHistoryTag = true;
       this.showUrlName = name;
+    },
+    getTodayData(){
+      const self = this
+      chrome.runtime.sendMessage({
+        method:"getTodayData"
+      }, function(response){
+        if(!response){
+          return;
+        }
+        let typeList = [];
+        let typeTimeData = [];
+        let itemList = [];
+        let maxMin = 0;
+        let timeList=[];
+        for(let h in response){
+          let theHostObj = response[h];
+          let hostConsume = theHostObj.Consume.map(function(v){
+            if(!v){
+              return 0;
+            }
+            return v;
+          });
+          if(timeList.length==0){
+            for(let i in hostConsume){
+              timeList.push(i+"点")
+            }
+          }
+
+          let useMin = 0;
+          let idx = typeList.indexOf(h);
+          if(idx<0){
+            typeList.push(h);
+            typeTimeData.push(hostConsume);
+          }else{
+            hostConsume.forEach(function(hv,index){
+              useMin += hv;
+              typeTimeData[idx][index] = typeTimeData[idx][index] + hv;
+            });
+          }
+
+          itemList.push({
+            name:h,
+            useMin:usemin,
+            imageData:theHostObj.icon
+          });
+
+          maxMin = Math.max(usemin,maxMin);
+        }
+
+        self.maxMin = maxMin;
+        self.itemList = itemList;
+        self.typeList = typeList;
+        self.typeTimeData = typeTimeData;
+        self.timeList = timeList;
+        self.update++;
+      });
+    },
+    getHostType(host){
+      return catory.getCatoryByHostName(host);
     }
   }
 }
