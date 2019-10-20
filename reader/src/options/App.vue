@@ -37,7 +37,6 @@ import WordCloud from "../components/WordCloud"
 export default {
   name: 'app',
   data () {
-    // jieba.getKeyWords(""); //这里方法有问题,执行不下去
     return {
       msg: 'This is options page !aaaaaaa',
       recommend:false,
@@ -114,6 +113,9 @@ export default {
     showReport(){
 
     }
+  },
+  mounted(){
+    hosts.getHostInformation('')
   }
 }
 </script>
