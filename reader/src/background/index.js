@@ -12,7 +12,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
 chrome.tabs.onActivated.addListener(function (info){
     chrome.tabs.get(info.tabId, function(tab) {
-        console.log(tab)
         if(tab && tab.url && tab.status === 'complete') {
             setLoad(getHostname(tab.url))
         }
@@ -21,7 +20,6 @@ chrome.tabs.onActivated.addListener(function (info){
 
 setInterval(function(){
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-        console.log(tabs[0])
         if(tabs[0]) {
             setConsume(getHostname(tabs[0].url))
         }
@@ -54,20 +52,20 @@ function callback(obj, sender, sendResponse) {
 }
 
 //some async method
-function getContent(sendResponse) {
-    let date = new Date()
-    let day = date.toLocaleDateString()
-    chrome.storage.local.get(null, function(result) {
-        // const data = []
-        // for(let key in result) {
-        //     if(result[key] && result[key].consumes) {
-        //         data.push(key + ":" + result[key].consumes[day])
-        //     }
-        // }
-        console.log(result)
-        sendResponse(result)
-    })
-}
+// function getContent(sendResponse) {
+//     let date = new Date()
+//     let day = date.toLocaleDateString()
+//     chrome.storage.local.get(null, function(result) {
+//         // const data = []
+//         // for(let key in result) {
+//         //     if(result[key] && result[key].consumes) {
+//         //         data.push(key + ":" + result[key].consumes[day])
+//         //     }
+//         // }
+//         console.log(result)
+//         sendResponse(result)
+//     })
+// }
 
     //  chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
     //     if(message == 'Hello'){
