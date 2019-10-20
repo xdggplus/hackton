@@ -61,9 +61,11 @@ export default {
      * }
      */
     getHostInformation: async function (hostname) {
-        var url = "http://data.alexa.com/data?cli=10&dat=snbamz&url=" + "www.baidu.com"
+        var url = "http://data.alexa.com/data?cli=10&dat=snbamz&url=" + hostname
+        const self = this
         return await axios.get(url).then(async function (response) {
                 if (response.status != 200) {
+                    console.log(error)
                     return undefined
                 }
                 let json = xml2js.parseStringPromise(response.data, { explicitArray: false })
@@ -87,9 +89,9 @@ export default {
                     let sd = m.ALEXA['SD']
                     let res = {}
                     res.name = sd[0].TITLE.$.TEXT
-                    res.popular = this.getstarts(sd[1].POPULARITY.$.RANK)
-                    res.popularNum = parseInt(sd[1].POPULARITY.$.RANK)
-                    res.rank = this.getstarts(sd[1].REACH.$.RANK)
+                    res.popular = self.getstarts(sd[1].POPULARITY.$.TEXT)
+                    res.popularNum = parseInt(sd[1].POPULARITY.$.TEXT)
+                    res.rank = self.getstarts(sd[1].REACH.$.RANK)
                     res.rankNum = parseInt(sd[1].REACH.$.RANK)
                     res.country = sd[1].COUNTRY.$.NAME
                     return res
