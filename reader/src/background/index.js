@@ -5,7 +5,7 @@ import {getHostname} from './utils'
 
 console.log('This is BACKGROUND page!')
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) { 
-    if(changeInfo.status === 'complete') {
+    if(tab.url && changeInfo.status === 'complete') {
         setLoad(getHostname(tab.url), tab.title, tab.favIconUrl)
     }
 })
@@ -13,7 +13,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 chrome.tabs.onActivated.addListener(function (info){
     chrome.tabs.get(info.tabId, function(tab) {
         console.log(tab)
-        if(tab && tab.url) {
+        if(tab && tab.url && tab.status === 'complete') {
             setLoad(getHostname(tab.url))
         }
     })
