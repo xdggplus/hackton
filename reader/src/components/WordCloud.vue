@@ -76,7 +76,7 @@ require('echarts-wordcloud');
                                 }
                             },
                             emphasis: {
-                                shadowBlur: 5,
+                                shadowBlur: 2,
                                 shadowColor: '#333'
                             }
                         },

@@ -22,7 +22,7 @@
         props:{
             imageData:{
                 type:String,
-                required:true
+                default:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAeCAYAAAAcni9KAAAAaElEQVQ4jcXTMQ4AEBAEQH/yJ69Vq31CTSWRC26dDcVVu1NtzvkQq+VcyuUDPMUpFwJEce9yoIbHHg+usOxwocSznA87XmV2aH4rbbM3ENmVB5FdeXC3qcT3UEMS30EUjdgOTxH0Vrtri9j3uTwNEWIAAAAASUVORK5CYII="
             },
             name:String,
             useMin:{
@@ -47,7 +47,7 @@
                 if(this.useMin<=0 || this.maxMin<=0){
                     return 5;
                 }else{
-                    return parseInt(5 + (this.width-80-100)*(this.useMin/this.maxMin));
+                    return parseInt(5 + (this.width-100-100)*(this.useMin/this.maxMin));
                 }
             }
         },
