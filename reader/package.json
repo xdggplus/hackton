@@ -44,7 +44,7 @@
     "json-loader": "^0.5.7",
     "lodash": "^4.17.15",
     "node-rsa": "^1.0.0",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.13.1",
     "request": "^2.82.0",
     "sass-loader": "^6.0.6",
     "segmentit": "^2.0.2",
